@@ -9,9 +9,8 @@ import os
 import time
 import glob
 
-# ----------------------------
 # Text to Speech
-# ----------------------------
+
 engine = pyttsx3.init()
 engine.setProperty("rate", 160)
 
@@ -19,25 +18,25 @@ def speak(text):
     engine.say(text)
     engine.runAndWait()
 
-# ----------------------------
+
 # Load Whisper Model
-# ----------------------------
+
 print("Loading Whisper model...")
 model = whisper.load_model("base")  # "small" for better accuracy
 print("Whisper loaded")
 
-# ----------------------------
+
 # Record Audio
-# ----------------------------
+
 def record_audio(duration=5, fs=16000):
     print("Listening...")
     audio = sd.rec(int(duration * fs), samplerate=fs, channels=1, dtype="float32")
     sd.wait()
     return np.squeeze(audio)
 
-# ----------------------------
+
 # Listen Function
-# ----------------------------
+
 def listen():
     try:
         audio = record_audio()
@@ -49,9 +48,9 @@ def listen():
         print("Error:", e)
         return ""
 
-# ----------------------------
+
 # Open any installed app dynamically
-# ----------------------------
+
 def open_app(app_name):
     app_name = app_name.lower()
     paths = [
@@ -81,9 +80,9 @@ def open_app(app_name):
     else:
         speak(f"Could not find {app_name} installed on your system")
 
-# ----------------------------
+
 # Open websites intelligently
-# ----------------------------
+
 def open_website(site_name):
     site_name = site_name.lower()
     websites = {
@@ -98,18 +97,18 @@ def open_website(site_name):
     speak(f"Opening {site_name}")
     webbrowser.open(url)
 
-# ----------------------------
+
 # Search on YouTube
-# ----------------------------
+
 def search_youtube(query):
     query = query.replace("search ", "").replace("on youtube", "").strip()
     url = f"https://www.youtube.com/results?search_query={query.replace(' ', '+')}"
     speak(f"Searching YouTube for {query}")
     webbrowser.open(url)
 
-# ----------------------------
+
 # Create folder in Documents
-# ----------------------------
+
 def create_folder(folder_name):
     folder_path = os.path.join(os.path.expanduser("~\\Documents"), folder_name)
     try:
@@ -118,9 +117,9 @@ def create_folder(folder_name):
     except Exception as e:
         speak("Could not create folder")
 
-# ----------------------------
+
 # Command Execution
-# ----------------------------
+
 def execute_command(command):
     if not command:
         return
@@ -196,9 +195,9 @@ def execute_command(command):
     # Fallback
     speak("Sorry, I don't know how to do that yet.")
 
-# ----------------------------
+
 # Main Loop
-# ----------------------------
+
 speak("Voice assistant started. Say exit to stop.")
 
 while True:
